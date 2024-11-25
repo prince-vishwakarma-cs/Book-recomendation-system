@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white font-sans">
+
+    <!-- Navbar -->
+    <nav class="">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <a href="/" class="text-2xl font-bold tracking-wide text-white">Book Recommender</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="py-12 text-center">
+        <h1 class="text-4xl font-extrabold">Recommend Books</h1>
+        <p class="text-gray-400 mt-2">Find books based on your interests</p>
+    </header>
+
+    <!-- Recommendation Form -->
+    <section class="container mx-auto px-6">
+        <form action="/recommend_books" method="post" class="p-6 max-w-lg mx-auto">
+            <label for="user_input" class="block text-lg font-medium mb-2">Enter Your Preferences</label>
+            <input id="user_input" name="user_input" type="text"
+                   class="w-full p-3  bg-zinc-700 text-white rounded-md placeholder-gray-400 mb-4 focus:ring-1 focus:ring-emerald-500"
+                   placeholder="Type your favorite book name">
+            <button type="submit" class="w-full bg-[#FACC15] rounded-md text-zinc-950 py-2 px-6 hover:bg-[#FACC15e9] transition-colors">
+                Recommend
+            </button>
+        </form>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="container mx-auto mt-12 px-6">
+        <!-- Error Message -->
+        {% if error %}
+        <div class="bg-red-500 text-white p-4 mb-6 rounded-md">
+            <p>{{ error }}</p>
+        </div>
+
+        <!-- Suggested Books -->
+        {% if suggestions %}
+<h2 class="text-xl font-semibold mb-4">Suggestions:</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+    {% for suggestion in suggestions %}
+        <div class="relative overflow-hidden group rounded-md">
+    <!-- Book Cover Image -->
+    <img src="{{ suggestion[2] }}" alt="Book Cover" class="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-300">
+
+    <!-- Incremental Blur Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+    <!-- Book Information -->
+    <div class="absolute bottom-0 left-0 w-full p-4 text-white bg-gradient-to-t from-black/70 to-black/40 backdrop-blur-md">
+        <h3 class="text-lg font-bold truncate">{{ suggestion[0] }}</h3>
+        <p class="text-sm text-gray-300 mt-1">{{ suggestion[1] }}</p>
+        <div class="mt-4 flex justify-between items-center text-sm">
+            <p>Votes: <span class="font-semibold">{{suggestion[3] }}</span></p>
+            <p>Rating: <span class="font-semibold">{{ suggestion[4] }}</span></p>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endif %}
+
+
+        <!-- Recommendations -->
+        {% if data %}
+        <h2 class="text-2xl font-semibold mb-6">Recommended Books</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            {% for book in data %}
+
+               <div class="relative overflow-hidden rounded-md group">
+    <!-- Book Cover Image -->
+    <img src="{{ book[2] }}" alt="Book Cover" class="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-300">
+
+    <!-- Incremental Blur Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+    <!-- Book Information -->
+    <div class="absolute bottom-0 left-0 w-full p-4 text-white bg-gradient-to-t from-black/70 to-black/40 backdrop-blur-md">
+        <h3 class="text-lg font-bold truncate">{{ book[0] }}</h3>
+        <p class="text-sm text-gray-300 mt-1">{{ book[1] }}</p>
+        <div class="mt-4 flex justify-between items-center text-sm">
+            <p>Votes: <span class="font-semibold">{{ book[3] }}</span></p>
+            <p>Rating: <span class="font-semibold">{{ book[4] }}</span></p>
+        </div>
+    </div>
+</div>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-gray-400 text-center py-6 mt-12">
+        <p>&copy; 2024 Book Recommender. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

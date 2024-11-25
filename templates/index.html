@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white font-sans">
+
+    <!-- Navbar -->
+    <nav class="">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <a href="/" class="text-2xl font-bold tracking-wide text-white">Book Recommender</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+   <section class="text-white py-20 bg-cover bg-center relative" style="background-image: url('https://img.freepik.com/premium-photo/collage-vintage-comic-book-covers_36682-102069.jpg');">
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-black/50 to-zinc-900 backdrop-blur-[50%]"></div>
+    <div class="container mx-auto text-center relative z-10 ">
+        <h1 class="text-4xl font-extrabold">Discover Books Like Your Favourite Ones</h1>
+        <p class="text-gray-200 mt-4">Explore highly rated books, curated just for you.</p>
+        <a href="/recommend" class="mt-6 inline-block bg-[#FACC15] text-zinc-950 py-2 px-6 hover:bg-[#FACC15e9] transition-colors rounded-md">
+            Get Recommendations
+        </a>
+    </div>
+</section>
+
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <h2 class="text-2xl font-semibold mb-8">Top 50 Books</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            <!-- Card Template -->
+            {% for i in range(book_name|length) %}
+            <div class="relative overflow-hidden group rounded-md">
+    <!-- Book Cover Image -->
+    <img src="{{ image[i] }}" alt="Book Cover" class="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-300">
+
+    <!-- Incremental Blur Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+    <!-- Book Information -->
+    <div class="absolute bottom-0 left-0 w-full p-4 text-white bg-gradient-to-t from-black/70 to-black/40 backdrop-blur-md">
+        <h3 class="text-lg font-bold truncate">{{ book_name[i] }}</h3>
+        <p class="text-sm text-gray-300 mt-1">{{ author[i] }}</p>
+        <div class="mt-4 flex justify-between items-center text-sm">
+            <p>Votes: <span class="font-semibold">{{ votes[i] }}</span></p>
+            <p>Rating: <span class="font-semibold">{{ rating[i] }}</span></p>
+        </div>
+    </div>
+</div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-gray-400 text-center py-6">
+        <p>&copy; 2024 Book Recommender. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
